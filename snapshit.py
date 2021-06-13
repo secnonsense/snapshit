@@ -39,10 +39,10 @@ def compare_files(file,file2,nomatch=0,i=0,d=0,x=0):
 
 def parse_args():
     parser = argparse.ArgumentParser()
-    parser.add_argument("-s", "--snapshit", help="Show strings that don't have a match", action="store")
-    parser.add_argument("-c", "--compare", help="Print a list of matching strings only", action="store")
+    parser.add_argument("-s", "--snapshit", help="specify new snapshit file name", action="store")
+    parser.add_argument("-c", "--compare", help="specify file (or files) to compare", action="store")
     parser.add_argument("spath", help="Enter path to snapshit")
-    #parser.add_argument("dpath", help="Enter path to compare snapshit to")
+    parser.add_argument("dpath", help="Enter path to compare snapshit to",nargs='?')
     return parser.parse_args()
 
 
@@ -53,7 +53,7 @@ def main():
     else:
         snapshit="./snapshit.txt"
     dir=directory_list(args.spath)
-    generate_hash(args.spath,dir)
+    generate_hash(args.spath,dir,snapshit)
 
 if __name__ == "__main__":
     main()
