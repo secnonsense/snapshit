@@ -14,7 +14,6 @@ def generate_hash(path,dir,snapshit="snapshit.txt"):
         for file in dir:
             hash = hashlib.sha256()
             BLOCK_SIZE = 65536
-            print(file)
             with open(file,'rb') as f:
                 for byte_block in iter(lambda: f.read(BLOCK_SIZE),b""):
                     hash.update(byte_block)
@@ -22,7 +21,7 @@ def generate_hash(path,dir,snapshit="snapshit.txt"):
 
 def compare_string(string1,string2):
     if string1 == string2:
-        print(f"string {string1} matches {string2}")
+        #print(f"string {string1} matches {string2}")
         toggle=1
         return toggle
 
@@ -41,10 +40,12 @@ def compare_files(file,file2):
                         hash_toggle=compare_string(fnamehash1[1].strip(),fnamehash2[1].strip())
                         if hash_toggle==1:
                             match=1
+                        else:
+                            nomatch_hash=fnamehash2[1].strip()
                 if fmatch==0:
-                    print(f"No match for {fnamehash1[0].strip()}")
+                    print(f"\nNo match for {fnamehash1[0].strip()}\n")
                 elif fmatch==1 and match==0:
-                    print(f"{fnamehash1[0].strip()} has changed")
+                    print(f"\n{fnamehash1[0].strip()} has changed..\n Source hash: {fnamehash1[1].strip()}\n Dest hash: {nomatch_hash}\n")
  
 
 def parse_args():
@@ -69,11 +70,11 @@ def main():
     elif args.dpath and not args.compare:
         print("You can't specify a 2nd positional argument without -c")
         quit()
-    elif args.compare:
-        compare_files("./snapshit.txt","./cshit.txt") #this needs to move..
     else:
         dir=directory_list(args.spath)
         generate_hash(args.spath,dir,snapshit)
+        if args.compare:
+            compare_files("./snapshit.txt","./cshit.txt") 
     
 
 if __name__ == "__main__":
