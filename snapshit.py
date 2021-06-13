@@ -27,26 +27,32 @@ def compare_string(string1,string2):
         return toggle
 
 def compare_files(file,file2):
-    count=0
     with open(file, 'r') as string1_file:
             for string1 in string1_file:
+                fnamehash1=string1.split(',')
                 with open(file2, 'r') as string2_file:
                     match=0
+                    fmatch=0
                     for string2 in string2_file:
-                        toggle=compare_string(string1.strip(),string2.strip())
+                        fnamehash2=string2.split(',')
+                        toggle=compare_string(fnamehash1[0].strip(),fnamehash2[0].strip())
                         if toggle==1:
-                            match=1
-                            count+=1
-                    if match==0:
-                        print(f"No match for {string1.strip()}") 
+                            fmatch=1
+                            hash_toggle=compare_string(fnamehash1[1].strip(),fnamehash2[1].strip())
+                            if hash_toggle==1:
+                                match=1
+                    if fmatch==0:
+                        print(f"No match for {fnamehash1[0].strip()}")
+                    elif fmatch==1 and match==0:
+                        print(f"{fnamehash1[0].strip()} has changed")
  
 
 def parse_args():
     parser = argparse.ArgumentParser()
     parser.add_argument("-s", "--snapshit", help="specify new snapshit file name", action="store")
-    parser.add_argument("-c", "--compare", help="specify file (or files) to compare", action="store")
+    parser.add_argument("-c", "--compare", help="specify file (or files) to compare", action="store_true")
     parser.add_argument("spath", help="Enter path to snapshit")
-    parser.add_argument("dpath", help="Enter path to compare snapshit to",nargs='?')
+    parser.add_argument("dpath", help="Enter path to compare snapshit to",nargs="?")
     return parser.parse_args()
 
 
