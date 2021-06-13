@@ -6,15 +6,16 @@ def directory_list(path):
     dir = next(os.walk(path))[2]
     return dir
 
-def generate_hash(path,dir):
+def generate_hash(path,dir,snapshit="snapshit.txt"):
     for file in dir:
-        hash = hashlib.sha256()
-        BLOCK_SIZE = 65536
-        print(path+file)
-        with open(path+file,'rb') as f:
-            for byte_block in iter(lambda: f.read(BLOCK_SIZE),b""):
-                hash.update(byte_block)
-        print (file,hash.hexdigest())
+        with open(snapshit,'w',encoding='utf-8') as output:
+            hash = hashlib.sha256()
+            BLOCK_SIZE = 65536
+            print(path+file)
+            with open(path+file,'rb') as f:
+                for byte_block in iter(lambda: f.read(BLOCK_SIZE),b""):
+                    hash.update(byte_block)
+            output.write(file + "," + hash.hexdigest() + "\n")
 
 def compare_files(file,file2,nomatch=0,i=0,d=0,x=0):
     count=0
