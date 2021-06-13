@@ -28,23 +28,23 @@ def compare_string(string1,string2):
 
 def compare_files(file,file2):
     with open(file, 'r') as string1_file:
-            for string1 in string1_file:
-                fnamehash1=string1.split(',')
-                with open(file2, 'r') as string2_file:
-                    match=0
-                    fmatch=0
-                    for string2 in string2_file:
-                        fnamehash2=string2.split(',')
-                        toggle=compare_string(fnamehash1[0].strip(),fnamehash2[0].strip())
-                        if toggle==1:
-                            fmatch=1
-                            hash_toggle=compare_string(fnamehash1[1].strip(),fnamehash2[1].strip())
-                            if hash_toggle==1:
-                                match=1
-                    if fmatch==0:
-                        print(f"No match for {fnamehash1[0].strip()}")
-                    elif fmatch==1 and match==0:
-                        print(f"{fnamehash1[0].strip()} has changed")
+        for string1 in string1_file:
+            fnamehash1=string1.split(',')
+            with open(file2, 'r') as string2_file:
+                match=0
+                fmatch=0
+                for string2 in string2_file:
+                    fnamehash2=string2.split(',')
+                    toggle=compare_string(fnamehash1[0].strip(),fnamehash2[0].strip())
+                    if toggle==1:
+                        fmatch=1
+                        hash_toggle=compare_string(fnamehash1[1].strip(),fnamehash2[1].strip())
+                        if hash_toggle==1:
+                            match=1
+                if fmatch==0:
+                    print(f"No match for {fnamehash1[0].strip()}")
+                elif fmatch==1 and match==0:
+                    print(f"{fnamehash1[0].strip()} has changed")
  
 
 def parse_args():
@@ -69,11 +69,12 @@ def main():
     elif args.dpath and not args.compare:
         print("You can't specify a 2nd positional argument without -c")
         quit()
+    elif args.compare:
+        compare_files("./snapshit.txt","./cshit.txt") #this needs to move..
     else:
         dir=directory_list(args.spath)
         generate_hash(args.spath,dir,snapshit)
-    if args.compare:
-        compare_files("./snapshit.txt","./cshit.txt")
+    
 
 if __name__ == "__main__":
     main()
