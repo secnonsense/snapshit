@@ -7,8 +7,8 @@ def directory_list(path):
     return dir
 
 def generate_hash(path,dir,snapshit="snapshit.txt"):
-    for file in dir:
-        with open(snapshit,'w',encoding='utf-8') as output:
+    with open(snapshit,'w',encoding='utf-8') as output:
+        for file in dir:
             hash = hashlib.sha256()
             BLOCK_SIZE = 65536
             print(path+file)
