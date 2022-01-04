@@ -3,7 +3,7 @@ Script to snapshot a directory and then compare it
 
 Snapshit makes a snapshot of the specified directory by creating an output file (called snapshit.txt by default) which is a list of filenames and hashes of the files. Ideally don't run snapshit from within the target directory or the snapshit file will impact the results. After creating an initial snapshit, the snapshit file can be compared to another snapshit file (using -c) , or a directory (by specifying the path). The -c option generates a 2nd snapshit named cshit.txt in the current directoy. The compare function will find files missing in the destination or files that have been changed.  However it will not find files that have been added in the destination.  However this can be completed by running an additional snapshit comparison as follows:  
 
-**Compare destination to source (instead of the default source to destination)**  
+**Compare destination to source (instead of the default source to destination):**  
 python3 snapshit.py -c cshit.txt snapshit.txt  
 
 Other Examples:  
